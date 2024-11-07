@@ -106,8 +106,8 @@ echo "<p class='header-title'>DANH MỤC SẢN PHẨM</p>";
         echo "<p class='price'>
                 {$rows['Gia']}<span>đ</span>
               </p>";
+              echo "<a href='ThongtinSanpham.php?mamay={$rows[0]}' class='delete-button'>Xem chi tiết</a>";
 
-              
         echo "</td>";
         
         $counter++;
