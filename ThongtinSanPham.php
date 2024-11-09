@@ -29,7 +29,7 @@ $rows = mysqli_fetch_array($result);
 </head>
 
 <body>
-    <p class='header-title'>CẬP NHẬT SẢN PHẨM</p>
+    <p class='header-title'>XEM CHI TIẾT SẢN PHẨM</p>
 
     <form action="Suasp.php" method="POST">
         <table>

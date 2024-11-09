@@ -75,12 +75,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 	// Kiểm tra Hình
+	if(isset($_FILES['hinh'])){
+		if (empty($_FILES['hinh']['name'])) {
+		   $hinh = mysqli_real_escape_string($dbc, trim($rows['Hinh']));
+		}
+		else
+		{
+		$file_name = $_FILES['hinh']['name'];
+		$file_tmp =$_FILES['hinh']['tmp_name'];
+		move_uploaded_file($file_tmp, __DIR__ . "\\img\\" . $file_name);
+		   $hinh = mysqli_real_escape_string($dbc, trim($file_name));
+		}
+	}
+
+
+
+	/*
 	if (empty($_POST['hinh'])) {
 		$errors[] = 'Chưa chọn hình ảnh!';
 	} else {
 		$hinh = mysqli_real_escape_string($dbc, trim($_POST['hinh']));
 	}
 
+	*/
 	// Kiểm tra Giá
 	if (empty($_POST['gia'])) {
 		$errors[] = 'Bạn chưa nhập giá. Vui lòng nhập!';
@@ -163,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 	<p class='header-title'>CẬP NHẬT SẢN PHẨM</p>
 
-	<form action="Suasp.php" method="POST">
+	<form action="Suasp.php" method="POST" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>
@@ -251,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					Hình:
 				</td>
 				<td>
-					<input type="file" name="hinh" size="15" maxlength="200" />
+					<input type="file" name="hinh" size="15" maxlength="200"/>
 				</td>
 			</tr>
 			<tr>

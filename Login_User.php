@@ -64,7 +64,7 @@ include "Connect_Database.php";
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Đăng nhập</h1>
                                     </div>
-                                    <form class="user" action="Register_User.php" method="post">
+                                    <form class="user" action="Login_User.php" method="post">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
