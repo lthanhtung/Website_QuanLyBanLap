@@ -1,8 +1,117 @@
-<?php # Script 3.4 - index.php
+
+<?php 
+session_start(); // Bắt đầu session
+
+// Thiết lập thoi gian
+$thoigiandangxuat = 100 ; 
+
+
+
+// Kiểm tra và cập nhật thời gian hoạt động cuối cùng của người dùng
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $thoigiandangxuat) {
+    // Nếu thời gian không hoạt động quá 15 phút, hủy phiên và chuyển hướng về trang đăng nhập
+    session_unset();
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
+$_SESSION['last_activity'] = time(); // Cập nhật thời gian hoạt động cuối cùng
+
+
+
+// Kiểm tra nếu người dùng đã đăng nhập
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+ echo '
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trang Đăng nhập</title>
+        <!-- Nhúng file CSS -->
+    <link rel="stylesheet" href="includes/style.css?v=1" type="text/css"/>
+    </head>
+    <body>
+        <form id="login-form" action="" method="post">
+            <h2 id="login-title">ĐĂNG NHẬP</h2>
+            <br>
+            <p> Tên đăng nhập:</p>
+            <input type="text" name="username" required> <br>
+            <p> Mật khẩu:</p>
+            <input id="matkhau" type="password" name="password" required>
+            <br>
+            <input id="dangnhap" type="submit" name="login" value="Đăng nhập">
+
+        </form>';
+
+    // Xử lý đăng nhập
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        // Kết nối cơ sở dữ liệu
+        $conn = mysqli_connect('localhost', 'root', '', 'qlbanlap');
+        if (!$conn) {
+            die('Không thể kết nối: ' . mysqli_connect_error());
+        }
+
+        // Truy vấn kiểm tra thông tin người dùng
+        $sql = "SELECT * FROM user WHERE TenDangNhap='$username' AND password='$password'";
+        $result = mysqli_query($conn, $sql);
+
+        // Kiểm tra kết quả truy vấn
+        if (mysqli_num_rows($result) === 1) {
+            $row = mysqli_fetch_assoc($result); // Lấy dòng kết quả
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            $_SESSION['user_id'] = $row['MaUser'];
+            $_SESSION['last_activity'] = time(); // Khởi tạo thời gian hoạt động đầu tiên
+
+            header("Location: index.php"); // Chuyển hướng lại trang index sau khi đăng nhập
+            exit;
+        } else {
+            echo "<p>Sai tên đăng nhập hoặc mật khẩu!</p>";
+        }
+                mysqli_close($conn);
+    }
+} else {
+?>
+
+
+
+
+
+<?php
 $page_title = 'Trang chủ';
 include ('includes/header.html');
+$conn = mysqli_connect('localhost', 'root', '', 'qlbanlap');
 
+$userID = $_SESSION['user_id'];
+$sql = "
+SELECT khach_hang.Ten_khach_hang 
+FROM khach_hang
+JOIN user ON khach_hang.Ma_khach_hang = user.MaUser
+WHERE user.MaUser = '$userID'";
+$result = mysqli_query($conn, $sql);
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    $ten_khach_hang = $row['Ten_khach_hang'];
+    echo "Xin Chào, $ten_khach_hang!";
+}
+
+
+    //Xử lý đăng xuất
+
+if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
+    session_destroy(); // Hủy session
+    header("Location: index.php"); // Chuyển hướng về trang index
+    exit;
+}
 ?>
+
+
+
+
 
 <br>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -13,13 +122,13 @@ include ('includes/header.html');
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="img/banner4.png" alt="First slide">
+                    <img class="d-block w-100" src="img/banner3.png" alt="First slide">
                 </div>
                 <div class="carousel-item">
                     <img class="d-block w-100" src="img/banner2.png" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="img/banner3.png" alt="Third slide">
+                    <img class="d-block w-100" src="img/banner4.png" alt="Third slide">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -32,6 +141,7 @@ include ('includes/header.html');
             </a>
         </div>
         <br>
+
 
         <ul class="list-group list-group-horizontal">
           <li class="list-group-item"> <img src="img/msi.png"><br> <b>Laptop MSI</b> </li>
@@ -102,17 +212,20 @@ echo "<p class='header-title'>DANH MỤC SẢN PHẨM</p>";
         echo "<img src='img/{$rows['Hinh']}' width='150' height='150'>";
 
         echo "<p><b>{$rows['Ten_laptop']}</b></p>";  
-        echo "<p><b>{$rows['Cau_hinh']}</b></p>";  
-        echo "<p class='price'>
-                {$rows['Gia']}<span>đ</span>
-              </p>";
-              echo "<a href='ThongtinSanpham.php?mamay={$rows[0]}' class='delete-button'>Xem chi tiết</a>";
+        echo "<p><b>{$rows['Cau_hinh']}</b></p>"; 
+         
+       echo "<p class='price'>{$rows['Gia']}<span>đ</span></p>";
 
+          echo "<a href='ThongtinSanpham.php?mamay={$rows[0]}' class='delete-button'>Xem chi tiết</a>";
+
+
+
+              
         echo "</td>";
         
         $counter++;
         
-        // Tạo hàng mới sau mỗi 5 sản phẩm
+        // Tạo hàng mới sau mỗi 4 sản phẩm
         if ($counter % 4 == 0) {
             echo "</tr><tr>";
         }
@@ -127,4 +240,5 @@ echo"</table>";
 
 <?php
 include ('includes/footer.html');
+}
 ?>
