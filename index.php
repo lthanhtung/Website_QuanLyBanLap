@@ -36,11 +36,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <h2 id="login-title">ĐĂNG NHẬP</h2>
             <br>
             <p> Tên đăng nhập:</p>
-            <input type="text" name="username" required> <br>
+            <input type="text" name="username"> <br>
             <p> Mật khẩu:</p>
-            <input id="matkhau" type="password" name="password" required>
+            <input id="matkhau" type="password" name="password">
             <br>
             <input id="dangnhap" type="submit" name="login" value="Đăng nhập">
+            <input id="danhky" type="submit" name="register" value="Đăng ký">
 
         </form>';
 
@@ -48,7 +49,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-
+        if (empty($username) || empty($password)) {
+            echo "<p>Vui lòng nhập tên đăng nhập và mật khẩu!</p>";
+        }
         // Kết nối cơ sở dữ liệu
         $conn = mysqli_connect('localhost', 'root', '', 'qlbanlap');
         if (!$conn) {
@@ -74,6 +77,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         }
                 mysqli_close($conn);
     }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
+        header("Location: Register.php"); // Chuyển qua trang index sau ấn đăn ký
+    exit;
+    
+    }
 } else {
 ?>
 
@@ -98,6 +106,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     $ten_khach_hang = $row['Ten_khach_hang'];
     echo "Xin Chào, $ten_khach_hang!";
 }
+echo '<p><a href="index.php?logout=true">Đăng xuất</a></p>';
 
 
     //Xử lý đăng xuất
