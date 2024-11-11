@@ -37,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Kiểm tra Mật khẩu
     if (empty($_POST['password'])) {
         $errors[] = 'Mật khẩu không thể để trống. Vui lòng nhập!';
+    }elseif (strlen($_POST['password']) < 6) {
+        $errors[] = 'Mật khẩu phải có ít nhất 6 ký tự. Vui lòng nhập lại!';
     }
     //Xử lý nhập lại mật khẩu
     if (empty($_POST['passwordAgain'])) {
@@ -49,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[] = 'Nhập lại mật khẩu không đúng. Vui lòng kiểm tra lại!!';
     }
 
-
+/*
     // Kiểm tra Họ người dùng
     if (empty($_POST['Honguoidung'])) {
         $errors[] = 'Bạn chưa nhập Họ. Vui lòng nhập!';
@@ -96,34 +98,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $Email = mysqli_real_escape_string($dbc, trim($_POST['Email']));
     }
+*/
+    // Xử lý loại người dùng
+if (isset($_POST['Manguoidung'])) {
+    $maNguoiDung = $_POST['Manguoidung'];
 
-    //Xử lý loại người dùng
-    if (isset($_POST['loainguoidung'])) {
-        switch ($_POST['loainguoidung']) {
-            case 'khachhang':
-                $_POST['loainguoidung'] = 'Khách hàng';
-                break;
-            case 'nhanvien':
-                $_POST['loainguoidung'] = 'Nhân Viên';
-                break;
-            default:
-                $_POST['loainguoidung'] = 'Nhân viên';
-        }
-        $Loainguoidung = mysqli_real_escape_string($dbc, trim($_POST['loainguoidung']));
+    // Kiểm tra mã người dùng để xác định loại
+    if (strpos($maNguoiDung, 'KH') === 0) {
+        $Loainguoidung = 'Khách hàng';
+    } elseif (strpos($maNguoiDung, 'NV') === 0) {
+        $Loainguoidung = 'Nhân viên';
+    } else {
+        $errors[] = 'Mã người dùng không hợp lệ. Vui lòng nhập lại!';
     }
+    if (!isset($errors)) {
+        $Loainguoidung = mysqli_real_escape_string($dbc, trim($Loainguoidung));
+    }
+}
 
     if (empty($errors)) {
         // Đăng ký người dùng vào database
-        if ($_POST['loainguoidung'] == 'Khách hàng') {
+        if ($Loainguoidung == 'Khách hàng') {
+            /*
             //Tạo insert đến bảng khách hàng
             $q = "INSERT INTO khach_hang (Ma_khach_hang,Ho_Khach_Hang,Ten_khach_hang,Gioi_tinh,Dia_chi,Dien_thoai,Email)
             VALUES('$Manguoidung','$Honguoidung','$Tennguoidung','$Gioitinh','$diachi','$sdt', '$Email')";
             $r = @mysqli_query($dbc, $q); // Run the query.
+            */
             //Tạo insert đến bảng User
             $p = "INSERT INTO user (MaUser,TenDangNhap,password,Quyen)
             VALUES('$Manguoidung','$Tendangnhap','$password','$Loainguoidung')";
             $s = @mysqli_query($dbc, $p); // Run the query.
-            if ($r && $s) { // If it ran OK.
+            if ($s) { // If it ran OK.
                 // Print a message:
                 echo '<p class="success-message">Chào mừng bạn đã đến với trang web. Hãy trở về trang chủ để đăng nhập</p>';
     
@@ -147,15 +153,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
         else{
+            /*
             //Tạo insert đến bảng nhân viên
             $q = "INSERT INTO nhanvien (MaNV,HoNV,TenNV,gioiTinh,DiaChi,Sodienthoai,Email)
             VALUES('$Manguoidung','$Honguoidung','$Tennguoidung','$Gioitinh','$diachi','$sdt', '$Email')";
             $r = @mysqli_query($dbc, $q); // Run the query.
+            */
             //Tạo insert đến bảng User
             $p = "INSERT INTO user (MaUser,TenDangNhap,password,Quyen)
             VALUES('$Manguoidung','$Tendangnhap','$password','$Loainguoidung')";
             $s = @mysqli_query($dbc, $p); // Run the query.
-            if ($r && $s) { // If it ran OK.
+            if ($s) { // If it ran OK.
                 // Print a message:
                 echo '<p class="success-message">Chào mừng bạn đã đến với trang web. Hãy trở về trang chủ để đăng nhập</p>';
     
@@ -164,7 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 //echo'<a href="themsp.php" class="button-link"></a>';
     
-            }else { // If it did not run OK.
+            }
+            else { // If it did not run OK.
     
                 // Public message:
                 echo '<h1>Lỗi</h1>
@@ -215,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 Tên đăng nhập:
             </td>
             <td>
-                <input type="text" name="Tendangnhap" size="15" maxlength="100" value="<?php if (isset($_POST['Tendangnhap'])) echo $_POST['Honguoidung']; ?>" />
+                <input type="text" name="Tendangnhap" size="15" maxlength="100" value="<?php if (isset($_POST['Tendangnhap'])) echo $_POST['Tendangnhap']; ?>" />
             </td>
         </tr>
         <tr>
@@ -230,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </td>
             <td><input style="width: 600px;" type="password" name="passwordAgain" size="15" value="<?php if (isset($_POST['passwordAgain'])) echo $_POST['passwordAgain']; ?>" /></td>
         </tr>
-
+<!--
         <tr>
             <td>
                 Họ người dùng:
@@ -290,7 +299,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="radio" name="loainguoidung" value="nhanvien" <?php if (isset($_POST['loainguoidung']) && $_POST['loainguoidung'] == 'nhanvien') echo 'checked="checked"'; ?> /> Nhân viên
             </td>
         </tr>
-        
+-->        
 
         <tr>
             <td colspan="2" align="center">

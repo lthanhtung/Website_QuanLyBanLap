@@ -1,9 +1,8 @@
-
-<?php 
+<?php
 session_start(); // Bắt đầu session
 
 // Thiết lập thoi gian
-$thoigiandangxuat = 100 ; 
+$thoigiandangxuat = 100;
 
 
 
@@ -21,7 +20,7 @@ $_SESSION['last_activity'] = time(); // Cập nhật thời gian hoạt động 
 
 // Kiểm tra nếu người dùng đã đăng nhập
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
- echo '
+    echo '
     <!DOCTYPE html>
     <html lang="vi">
     <head>
@@ -65,22 +64,27 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         // Kiểm tra kết quả truy vấn
         if (mysqli_num_rows($result) === 1) {
             $row = mysqli_fetch_assoc($result); // Lấy dòng kết quả
-            $_SESSION['loggedin'] = true;
-            $_SESSION['username'] = $username;
-            $_SESSION['user_id'] = $row['MaUser'];
-            $_SESSION['last_activity'] = time(); // Khởi tạo thời gian hoạt động đầu tiên
+            if ($row['Quyen'] === 'Admin') { // Kiểm tra xem người dùng có phải là admin
+                $_SESSION['loggedin'] = true;
+                $_SESSION['username'] = $username;
+                $_SESSION['user_id'] = $row['MaUser'];
+                $_SESSION['last_activity'] = time(); // Khởi tạo thời gian hoạt động đầu tiên
 
-            header("Location: index.php"); // Chuyển hướng lại trang index sau khi đăng nhập
-            exit;
+                header("Location: index.php"); // Chuyển hướng lại trang index sau khi đăng nhập
+                exit;
+            } else {
+                //echo "<p>Chỉ tài khoản admin mới có quyền truy cập quyền truy cập vào trang này.</p>";
+                $_SESSION['user_id'] = $row['MaUser'];
+                header("Location: loginSuccess_Nhanvien_Khachhang.php");
+            }
         } else {
             echo "<p>Sai tên đăng nhập hoặc mật khẩu!</p>";
         }
-                mysqli_close($conn);
+        mysqli_close($conn);
     }
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         header("Location: Register.php"); // Chuyển qua trang index sau ấn đăn ký
-    exit;
-    
+        exit;
     }
 } else {
 ?>
@@ -89,165 +93,161 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 
 
-<?php
-$page_title = 'Trang chủ';
-include ('includes/header.html');
-$conn = mysqli_connect('localhost', 'root', '', 'qlbanlap');
+    <?php
+    $page_title = 'Trang chủ';
+    include('includes/header.html');
+    $conn = mysqli_connect('localhost', 'root', '', 'qlbanlap');
 
-$userID = $_SESSION['user_id'];
-$sql = "
-SELECT khach_hang.Ten_khach_hang 
-FROM khach_hang
-JOIN user ON khach_hang.Ma_khach_hang = user.MaUser
+    $userID = $_SESSION['user_id'];
+    $sql = "
+SELECT nhanvien.HoNV, nhanvien.TenNV 
+FROM nhanvien
+JOIN user ON nhanvien.MaNV = user.MaUser
 WHERE user.MaUser = '$userID'";
-$result = mysqli_query($conn, $sql);
-if ($result && mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $ten_khach_hang = $row['Ten_khach_hang'];
-    echo "Xin Chào, $ten_khach_hang!";
-}
-echo '<p><a href="index.php?logout=true">Đăng xuất</a></p>';
+    $result = mysqli_query($conn, $sql);
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $ho_nhan_vien = $row['HoNV'];
+        $ten_nhan_vien = $row['TenNV'];
+        echo "Xin Chào, Admin: $ho_nhan_vien $ten_nhan_vien!";
+    }
+    echo '<p><a href="index.php?logout=true">Đăng xuất</a></p>';
 
 
     //Xử lý đăng xuất
 
-if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
-    session_destroy(); // Hủy session
-    header("Location: index.php"); // Chuyển hướng về trang index
-    exit;
-}
-?>
+    if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
+        session_destroy(); // Hủy session
+        header("Location: index.php"); // Chuyển hướng về trang index
+        exit;
+    }
+    ?>
 
-
-
-
-
-<br>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="img/banner3.png" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="img/banner2.png" alt="Second slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="img/banner4.png" alt="Third slide">
-                </div>
+    <br>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="img/banner3.png" alt="First slide">
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="img/banner2.png" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="img/banner4.png" alt="Third slide">
+            </div>
         </div>
-        <br>
-
-
-        <ul class="list-group list-group-horizontal">
-          <li class="list-group-item"> <img src="img/msi.png"><br> <b>Laptop MSI</b> </li>
-          <li class="list-group-item"><img src="img/acer.png"><br> <b>Laptop ACER</b> </li>
-          <li class="list-group-item"><img src="img/apple.png"><br> <b>Laptop MACBOOK</b> </li>
-          <li class="list-group-item"><img src="img/asus.png"><br> <b>Laptop MACBOOK</b> </li>
-
-        </ul>
-<br>
-
-      <div class="card-deck">
-  <div class="card">
-    <img src="img/gammingqc.png" class="card-img-top" alt="">
-    <div class="card-body">
-     <h6 class="card-title">Laptop Gamming</h6>
-      
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-  </div>
-  <div class="card">
-    <img src="img/hoctapqc.png" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h6 class="card-title">Học tập-Văn phòng</h6>
-      
+    <br>
+
+
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item"> <img src="img/msi.png"><br> <b>Laptop MSI</b> </li>
+        <li class="list-group-item"><img src="img/acer.png"><br> <b>Laptop ACER</b> </li>
+        <li class="list-group-item"><img src="img/apple.png"><br> <b>Laptop MACBOOK</b> </li>
+        <li class="list-group-item"><img src="img/asus.png"><br> <b>Laptop MACBOOK</b> </li>
+
+    </ul>
+    <br>
+
+    <div class="card-deck">
+        <div class="card">
+            <img src="img/gammingqc.png" class="card-img-top" alt="">
+            <div class="card-body">
+                <h6 class="card-title">Laptop Gamming</h6>
+
+            </div>
+        </div>
+        <div class="card">
+            <img src="img/hoctapqc.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h6 class="card-title">Học tập-Văn phòng</h6>
+
+            </div>
+        </div>
+        <div class="card">
+            <img src="img/doanhnhanqc.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h6 class="card-title">Doanh nhân</h6>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="card">
-    <img src="img/doanhnhanqc.png" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h6 class="card-title">Doanh nhân</h6>
-     
-    </div>
-  </div>
-</div>
 
 
-<?php
+    <?php
 
 
-  // Ket noi CSDL
+    // Ket noi CSDL
 
-//require("connect.php");
+    //require("connect.php");
 
-$conn = mysqli_connect ('localhost', 'root', '', 'qlbanlap') 
+    $conn = mysqli_connect('localhost', 'root', '', 'qlbanlap')
 
-        OR die ('Could not connect to MySQL: ' . mysqli_connect_error() );
+        or die('Could not connect to MySQL: ' . mysqli_connect_error());
 
-$sql = '
+    $sql = '
     SELECT Ma_laptop,Ten_laptop,Hinh,Ma_hang,Ma_loai,Trong_luong,Gia,Cau_hinh from laptop
     
 ';
 
-$result = mysqli_query($conn, $sql);
+    $result = mysqli_query($conn, $sql);
 
-echo "<p class='header-title'>DANH MỤC SẢN PHẨM</p>";  
+    echo "<p class='header-title'>DANH MỤC SẢN PHẨM</p>";
 
 
- echo "<table align='center' width='770' border='1' cellpadding='2' cellspacing='2' style='border-collapse:collapse'>";
+    echo "<table align='center' width='770' border='1' cellpadding='2' cellspacing='2' style='border-collapse:collapse'>";
     // Đếm số sản phẩm trên mỗi hàng
-        $counter = 0;
+    $counter = 0;
 
 
- if (mysqli_num_rows($result) <> 0) {
+    if (mysqli_num_rows($result) <> 0) {
 
-    echo "<tr>"; // Bắt đầu hàng đầu tiên
-    while ($rows = mysqli_fetch_array($result)) {
-        echo "<td align='center' width='20%'>";
+        echo "<tr>"; // Bắt đầu hàng đầu tiên
+        while ($rows = mysqli_fetch_array($result)) {
+            echo "<td align='center' width='20%'>";
 
-        echo "<img src='img/{$rows['Hinh']}' width='150' height='150'>";
+            echo "<img src='img/{$rows['Hinh']}' width='150' height='150'>";
 
-        echo "<p><b>{$rows['Ten_laptop']}</b></p>";  
-        echo "<p><b>{$rows['Cau_hinh']}</b></p>"; 
-         
-       echo "<p class='price'>{$rows['Gia']}<span>đ</span></p>";
+            echo "<p><b>{$rows['Ten_laptop']}</b></p>";
+            echo "<p><b>{$rows['Cau_hinh']}</b></p>";
 
-          echo "<a href='ThongtinSanpham.php?mamay={$rows[0]}' class='delete-button'>Xem chi tiết</a>";
+            echo "<p class='price'>{$rows['Gia']}<span>đ</span></p>";
+
+            echo "<a href='ThongtinSanpham.php?mamay={$rows[0]}' class='delete-button'>Xem chi tiết</a>";
 
 
 
-              
-        echo "</td>";
-        
-        $counter++;
-        
-        // Tạo hàng mới sau mỗi 4 sản phẩm
-        if ($counter % 4 == 0) {
-            echo "</tr><tr>";
+
+            echo "</td>";
+
+            $counter++;
+
+            // Tạo hàng mới sau mỗi 4 sản phẩm
+            if ($counter % 4 == 0) {
+                echo "</tr><tr>";
+            }
         }
+        echo "</tr>"; // Đóng hàng cuối cùng
     }
-    echo "</tr>"; // Đóng hàng cuối cùng
-}
-echo"</table>";
+    echo "</table>";
 
-?>
+    ?>
 
 
 
 <?php
-include ('includes/footer.html');
+    include('includes/footer.html');
 }
 ?>
