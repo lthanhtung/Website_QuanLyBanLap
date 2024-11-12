@@ -30,19 +30,19 @@ body {
 /* header */
 #header {
 	border-bottom:1px solid #999;
-	height:80px;
+	height:100px;
 	margin:0 auto;
-	width:751px;
+	width:100%;
 	background-color: #f8f9fa;  
-     padding: 15px;              
-     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    padding: 15px;              
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 
 }
 
 
 /* navigation */
 #navigation {
-	background:#fafafa;
+	background: #a3d2e8;
 	border-right:1px solid #999;
 	margin:0 auto;
 	width:750px;
@@ -66,15 +66,10 @@ body {
 	padding:20px 20px 0;
 }
 
-/* footer */
-#footer {
-	border-top:1px solid #999; 
-	height:50px;
-	margin:0 auto;
-	padding:10px;
-	text-align:center;
-	width:751px;
+.bg-light {
+    background-color: #b2c6da !important;
 }
+
 
 /* Added by Larry Ullman: */
 .error, .ad {
@@ -108,10 +103,9 @@ input, select, .input {
         background-color: #ff4d4d;     /* Background color */  
         border: 2px solid red;          /* Small red border */  
         border-radius: 50px;            /* Rounded corners */  
-        padding: 3px 6px;               /* Smaller padding for a more compact look */  
         display: inline-block;           /* Make it inline-block */  
         text-align: center;             /* Center align text */  
-        margin: 5px;                    /* Optional margin */  
+        margin: 0 auto;                    /* Optional margin */  
     }   
 .price span {  
     font-size: 1em;         
@@ -132,29 +126,33 @@ input, select, .input {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
         font-family: cursive;
     }  
- 
-    #header {  
-        
-    }  
 
-    .navbar {  
-        display: flex;              /* Flexbox for layout */  
-        justify-content: space-between; /* Space between items */  
-        align-items: center;        /* Vertically center the items */  
-    }  
 
-    .navbar-brand {  
-        font-size: 24px;           /* Size of brand text */  
-        color: #343a40;            /* Dark text color */  
-        text-decoration: none;      /* Remove underline from link */  
-    }  
+    .form-inline {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa các mục */
+}
 
-    .navbar-brand img {  
-        margin-right: 10px;        /* Space between the logo and text */  
-    }  
-     .navbar-brand i {  
-       font-family: system-ui;
-    }  
+.form-inline i {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #4862c4;
+}
+
+.form-inline a {
+    text-decoration: none;
+    color: #4862c4;
+    font-weight: bold;
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+.form-inline a:hover {
+    color: #2b47a5;
+    text-decoration: underline;
+}
 
 
     .form-inline {  
@@ -167,9 +165,50 @@ input, select, .input {
         font-size: 17px;           /* Icon size */  
     }  
 
+.bg-light {
+    background-color: #849fba !important;
+}
+/* Thiết lập màu cho logo */
+.navbar .navbar-brand img {
+    height: 40px;
+}
 
+/* Tùy chỉnh các liên kết trong navbar */
+.navbar a {
+    color: #ffffff; /* Màu chữ trắng */
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: color 0.3s;
+}
 
+.navbar a:hover {
+    color: #ffb03b; /* Đổi màu khi hover */
+}
 
+/* Tùy chỉnh cho các icon */
+.navbar i {
+    color: #ffb03b; /* Màu icon */
+    font-size: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Khoảng cách giữa các item trong form */
+.navbar .form-inline {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Tùy chỉnh link bên trong icon */
+.navbar .form-inline a {
+    color: black; /* Màu chữ trắng */
+}
+
+.navbar .form-inline a:hover {
+    color: #ffb03b; /* Đổi màu khi hover */
+}
    #navigation {  
         background-color: #619bb6;              /* Dark background for the navigation */  
         padding: 15px;                       /* Padding around the navigation */  
@@ -321,11 +360,6 @@ table {
     }  
  
 
-    .price {  
-        font-size: 18px; /* Adjust font size for the price */  
-        color: white; /* Dark red color for the price */  
-    }  
-
     b {  
         color: #333; /* Dark color for text */  
     }  
@@ -353,3 +387,136 @@ table {
     .delete-button:hover {
         background-color: wheat; /* Màu khi rê chuột */
     }
+
+/*--------------footer------------------------------------- */
+.footer {
+    background: #F3F6FA;
+    padding-top: 70px;
+    padding-bottom: 0;
+}
+
+.footer__about {
+    margin-bottom: 30px;
+}
+
+.footer__about ul li {
+    font-size: 16px;
+    color: #1c1c1c;
+    line-height: 36px;
+    list-style: none;
+}
+
+.footer__about__logo {
+    margin-bottom: 15px;
+}
+
+.footer__about__logo a {
+    display: inline-block;
+}
+
+.footer__widget {
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.footer__widget h6 {
+    color: #1c1c1c;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.footer__widget ul {
+    width: 50%;
+    float: left;
+}
+
+.footer__widget ul li {
+    list-style: none;
+}
+
+.footer__widget ul li a {
+    color: #1c1c1c;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.footer__widget p {
+    font-size: 14px;
+    color: #1c1c1c;
+    margin-bottom: 30px;
+}
+
+.footer__widget form {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.footer__widget form input {
+    width: 100%;
+    font-size: 16px;
+    padding-left: 20px;
+    color: #1c1c1c;
+    height: 46px;
+    border: 1px solid #ededed;
+}
+
+.footer__widget form input::placeholder {
+    color: #1c1c1c;
+}
+
+.footer__widget form button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0 26px;
+    height: 100%;
+}
+
+.footer__widget .footer__widget__social a {
+    display: inline-block;
+    height: 41px;
+    width: 41px;
+    font-size: 16px;
+    color: #404040;
+    border: 1px solid #ededed;
+    border-radius: 50%;
+    line-height: 38px;
+    text-align: center;
+    background: #ffffff;
+    -webkit-transition: all, 0.3s;
+    -moz-transition: all, 0.3s;
+    -ms-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+    margin-right: 10px;
+}
+
+.footer__widget .footer__widget__social a:last-child {
+    margin-right: 0;
+}
+
+.footer__widget .footer__widget__social a:hover {
+    background: #7fad39;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+.footer__copyright {
+    border-top: 1px solid #ebebeb;
+    padding: 15px 0;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.footer__copyright__text {
+    font-size: 14px;
+    color: #1c1c1c; 
+    float: left;
+    line-height: 25px;
+}
+
+.footer__copyright__payment {
+    float: right;
+}
+
+/*----------------------------------------login-------------------*/

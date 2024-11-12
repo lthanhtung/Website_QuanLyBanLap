@@ -99,26 +99,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
     }
 } 
 
+ echo "<table align='center' width='770' border='1' cellpadding='2' cellspacing='2' style='border-collapse:collapse'>";
+    // Đếm số sản phẩm trên mỗi hàng
+        $counter = 0;
+
 // Hiển thị danh sách sản phẩm 
 if (!empty($results)) { 
-    echo "<table align='center' width='770' border='1' cellpadding='2' cellspacing='2' style='border-collapse:collapse'>"; 
-    echo "<tr>"; // Bắt đầu hàng đầu tiên 
+      echo "<tr>"; // Bắt đầu hàng đầu tiên
 
     while ($rows = mysqli_fetch_array($results)) { 
-        echo "<td align='center' width='20%'>"; 
-        echo "<img src='img/{$rows['Hinh']}' width='150' height='150'>"; 
+       echo "<td align='center' width='20%'>";
+
+        echo "<img src='img/{$rows['Hinh']}' width='150' height='150'>";
+
         echo "<p><b>{$rows['Ten_laptop']}</b></p>";  
-        echo "<p><b>{$rows['Cau_hinh']}</b></p>";  
-        echo "<p class='price'>{$rows['Gia']}<span>đ</span></p>"; 
-        echo "</td>"; 
+        echo "<p><b>{$rows['Cau_hinh']}</b></p>"; 
+         
+       echo "<p class='price'>{$rows['Gia']}<span>đ</span></p>";
+
+
+              
+        echo "</td>";
+        
+        $counter++;
+        if ($counter % 4 == 0) {
+            echo "</tr><tr>";
+        }
     } 
 
     echo "</tr>"; // Đóng hàng cuối cùng 
+}
     echo "</table>"; 
-} 
+ 
 
 // Đóng kết nối
 mysqli_close($conn); 
 ?>
 <a href="index.php" class="button-link">Trở về trang chủ</a>  
+<?php include('includes/footer.html'); ?>
 

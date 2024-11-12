@@ -80,8 +80,9 @@ echo "</table>";
 mysqli_close($conn);
 ?>
 
-<a href="index.php" class="button-link">Trở về trang chủ</a>  
+<a href="index.php" class="button-link">Trở về trang chủ</a> 
 
+<?php include('includes/footer.html'); ?>
 
 
 

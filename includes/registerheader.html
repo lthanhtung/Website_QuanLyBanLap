@@ -20,35 +20,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>  
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	<script>
-function confirmDelete(event, maLaptop) {
-    event.preventDefault(); // Ngăn chặn liên kết mặc định
-
-    Swal.fire({
-        title: 'Bạn có chắc chắn?',
-        text: "Bạn có chắc chắn muốn xóa sản phẩm này không?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Xóa',
-        cancelButtonText: 'Hủy'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = '?delete=' + maLaptop;
-        }
-    });
-}
-</script>
 
 </head>
 <body>
-		<nav class="navbar navbar-light bg-light">
+	<nav class="navbar navbar-light bg-light">
 <a class="navbar-brand" href="index.php">
     <img src="img/logo1.png" alt="" style="height:40px;">
 </a>
   <form class="form-inline">
-  	      <i class='bx bx-log-in'style='color:#3a78a9'><a href="index.php?logout=true">Log out</a></i>
 
       <i class='bx bx-phone-call'style='color:#4862c4' > <a href="#">0584088993</a></i>
       <i class='bx bxs-envelope' style='color:#4862c4'> <a href="#">ministore@gmail.com</a></i>
@@ -56,20 +35,9 @@ function confirmDelete(event, maLaptop) {
     </form>
      
     </nav> 
-
-
-	<div id="navigation">
-		<ul>
-			<li><a href="index.php">Trang chủ</a></li>
-			<li><a href="themsp.php">Thêm sản phẩm</a></li>
-			<li><a href="SuaSanPham.php">Cập nhật sản shẩm</a></li>
-			<li><a href="xoasp.php">Xóa sản phẩm</a></li>
-			<li><a href="timkiem.php">Tìm kiếm</a></li>
-		</ul>
-	</div>
-
-
-
+		
 
 	<div id="content"><!-- Start of the page-specific content. -->
 <!-- Script 9.1 - header.html -->
+
+</body>

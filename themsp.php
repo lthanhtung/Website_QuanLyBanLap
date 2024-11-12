@@ -94,25 +94,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 	// Kiểm tra Hình
-	if(isset($_FILES['hinh'])){
-		if (empty($_FILES['hinh']['name'])) {
-				$errors[] = 'Chưa chọn hình ảnh!';
-		}
-		else {
-		$file_name = $_FILES['hinh']['name'];
-		$file_tmp =$_FILES['hinh']['tmp_name'];
-		move_uploaded_file($file_tmp, __DIR__ . "\\img\\" . $file_name);
-		   $hinh = mysqli_real_escape_string($dbc, trim($file_name));
-		}
-	 }
-
-	/*
 	if (empty($_POST['hinh'])) {
 		$errors[] = 'Chưa chọn hình ảnh!';
 	} else {
 		$hinh = mysqli_real_escape_string($dbc, trim($_POST['hinh']));
 	}
-	*/
+
 	// Kiểm tra Giá
 	if (empty($_POST['gia'])) {
 		$errors[] = 'Bạn chưa nhập giá. Vui lòng nhập!';
@@ -173,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <p class='header-title'>THÊM VÀO SẢN PHẨM</p>
-<form action="themsp.php" method="post" enctype="multipart/form-data">
+<form action="themsp.php" method="post">
 	<table>
 		<tr>
 			<td>
@@ -252,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				Hình:
 			</td>
 			<td>
-				<input type="file" name="hinh" size="15" maxlength="200"/>
+				<input type="file" name="hinh" size="15" maxlength="200" value="<?php if (isset($_POST['hinh'])) echo $_POST['hinh']; ?>" />
 			</td>
 		</tr>
 		<tr>
