@@ -1,4 +1,4 @@
-<?php 
+<?php
 $page_title = 'Thêm laptop';
 include('includes/header.html');
 
@@ -9,7 +9,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	$errors = array(); // Initialize an error array.
 
+	//Xử lý mã laptop(tự động)
+	//Truy vấn lấy mã laptop có số lớn nhất
+	$sql = "SELECT Ma_laptop FROM laptop WHERE Ma_laptop LIKE 'M%' ORDER BY Ma_laptop DESC LIMIT 1";
+	//Kết quả truy vấn
+	$result = mysqli_query($dbc, $sql);
+	if (mysqli_num_rows($result) <> 0) {
+		$rows = mysqli_fetch_array($result);
+		$MaMoiNhat = $rows['Ma_laptop'];
+		//Lấy phần tử số lớp nhât của malaptop có trong csdl và bỏ phần tử đầu.
+		$Sothutu = (int)substr($MaMoiNhat,1);
+		$Somoi = $Sothutu + 1;
+		//Tạo mã máy tự động.
+		//str_pad(2,'0'STR_PAD_LEFT) thêm giá trị $somoi vào chuỗi
+		//Nếu chữ số <2 thì thêm 0 vào đằng trước.
+		$mamay = 'M'. str_pad($Somoi,2,'0',STR_PAD_LEFT);
+	}else {
+		$mamay = 'M01';
+	}
+
+
+
 	// Kiểm tra Mã laptop
+	/*
 	if (empty($_POST['mamay'])) {
 		$errors[] = 'Bạn chưa nhập mã loại máy!';
 	}
@@ -28,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 		}
 	}
-
+	*/
 
 	// Kiểm tra Tên laptop
 	if (empty($_POST['tenlaptop'])) {
@@ -126,9 +148,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 			echo '<a href="index.php" class="button-link" >Trở về trang chủ</a>';
-			
-			echo'<a href="themsp.php" class="button-link">Thêm tiếp sản phẩm</a>';
 
+			echo '<a href="themsp.php" class="button-link">Thêm tiếp sản phẩm</a>';
 		} else { // If it did not run OK.
 
 			// Public message:
@@ -162,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <p class='header-title'>THÊM VÀO SẢN PHẨM</p>
 <form action="themsp.php" method="post">
 	<table>
-		<tr>
+		<tr hidden>
 			<td>
 				Mã laptop:
 			</td>
@@ -256,10 +277,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<td colspan="2" align="center">
 				<input type="submit" name="submit" value="THÊM LOẠI MÁY" />
 			</td>
-			
+
 		</tr>
 	</table>
-<a href="index.php" class="button-link">Trở về trang chủ</a>  
+	<a href="index.php" class="button-link">Trở về trang chủ</a>
 
 </form>
 <?php include('includes/footer.html'); ?>
