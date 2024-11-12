@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 			// Print a message:
-			echo '<p class="success-message">Đã thêm loại máy thành công!</p>';
+			echo '<p class="success-message">Đã thêm sản phẩm thành công!</p>';
 
 
 			echo '<a href="index.php" class="button-link" >Trở về trang chủ</a>';
@@ -275,7 +275,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 		<tr>
 			<td colspan="2" align="center">
-				<input type="submit" name="submit" value="THÊM LOẠI MÁY" />
+				<input type="submit" name="submit" value="THÊM SẢN PHẨM" />
 			</td>
 
 		</tr>
