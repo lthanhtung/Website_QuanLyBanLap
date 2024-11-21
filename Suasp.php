@@ -34,38 +34,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$errors[] = 'Nhập trọng lượng không đúng vui lòng nhập lại';
 	}
 
-	// Kiểm tra Hãng sản xuất
+		// Kiểm tra Hãng sản xuất
 	if (isset($_POST['hangsx'])) {
-		switch ($_POST['hangsx']) {
-			case 'Acer':
-				$_POST['hangsx'] = 'MH01';
-				break;
-			case 'Macbook':
-				$_POST['hangsx'] = 'MH02';
-				break;
-			case 'Asus':
-				$_POST['hangsx'] = 'MH03';
-				break;
-			default:
-				$_POST['hangsx'] = 'MH04';
-		}
 		$hangsx = mysqli_real_escape_string($dbc, trim($_POST['hangsx']));
+	} else {
+		$errors[] = 'Bạn chưa chọn hãng sản xuất. Vui lòng chọn!';
 	}
 
 	// Kiểm tra Loại máy
 	if (isset($_POST['loaimay'])) {
-		switch ($_POST['loaimay']) {
-			case 'Vanphong':
-				$_POST['loaimay'] = 'ML01';
-				break;
-			case 'Gaming':
-				$_POST['loaimay'] = 'ML02';
-				break;
-			case 'Doanhnhan':
-				$_POST['loaimay'] = 'ML03';
-				break;
-		}
 		$tenloai = mysqli_real_escape_string($dbc, trim($_POST['loaimay']));
+	} else {
+
+		$errors[] = 'Bạn chưa chọn loại loại máy!';
 	}
 	// Kiểm tra Cấu hình
 	if (empty($_POST['cauhinh'])) {
@@ -165,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	<form action="Suasp.php" method="POST">
 		<table>
-			<tr>
+			<tr hidden>
 				<td>
 					Mã máy:
 				</td>
@@ -192,35 +173,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 								else echo $rows['Trong_luong']; ?>" />
 				</td>
 			</tr>
+
 			<tr>
 				<td>
 					Hãng sản xuất:
 				</td>
 				<td>
 					<select name="hangsx">
+						<?php
+						require('Connect_Database.php');
 
-						<option value="Acer" <?php if (isset($_POST['hangsx']) && $_POST['hangsx'] == 'Acer') echo 'selected'; ?>>
-							Acer
-						</option>
-
-						<option value="Macbook" <?php if (isset($_POST['hangsx']) && $_POST['hangsx'] == 'Macbook') echo 'selected'; ?>>
-
-							Macbook
-
-						</option>
-
-						<option value="Asus" <?php if (isset($_POST['hangsx']) && $_POST['hangsx'] == 'Asus') echo 'selected'; ?>>
-
-							Asus
-
-						</option>
-
-						<option value="MSI" <?php if (isset($_POST['hangsx']) && $_POST['hangsx'] == 'MSI') echo 'selected'; ?>>
-
-							MSI
-
-						</option>
-
+						$sql = "Select * FROM hang_laptop";
+						$result = mysqli_query($dbc, $sql);
+						if (mysqli_num_rows($result) <> 0) {
+							while ($row = mysqli_fetch_array($result)) {
+								echo "	<option value='$row[Ma_hang]'>$row[Ten_hang]</option>";
+							}
+						}
+						?>
 					</select>
 				</td>
 			</tr>
@@ -230,11 +200,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					Loại máy:
 				</td>
 				<td>
-					<input type="radio" name="loaimay" value="Vanphong" <?php if (isset($_POST['loaimay']) && $_POST['loaimay'] == 'Vanphong') echo 'checked="checked"'; ?> checked /> Văn phòng
-					<input type="radio" name="loaimay" value="Gaming" <?php if (isset($_POST['loaimay']) && $_POST['loaimay'] == 'Gaming') echo 'checked="checked"'; ?> /> Gaming
-					<input type="radio" name="loaimay" value="Doanhnhan" <?php if (isset($_POST['loaimay']) && $_POST['loaimay'] == 'Doanhnhan') echo 'checked="checked"'; ?> />Doanh nhân
+					<select name="loaimay">
+						<?php
+						$sql = "Select * FROM loai_may";
+						$result = mysqli_query($dbc, $sql);
+						if (mysqli_num_rows($result) <> 0) {
+							while ($row = mysqli_fetch_array($result)) {
+								echo "<option value='$row[Ma_loai]'>$row[Ten_loai]</option>";
+							}
+						}
+						mysqli_close($dbc);
+
+						?>
+					</select>
 				</td>
 			</tr>
+
+
 			<tr>
 				<td>
 					Cấu hình:

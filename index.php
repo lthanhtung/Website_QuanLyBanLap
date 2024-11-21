@@ -3,7 +3,7 @@
 session_start(); 
 
 // Thiết lập thời gian đăng xuất tự động
-$thoigiandangxuat = 100;
+$thoigiandangxuat = 10000;
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $thoigiandangxuat) {
     session_unset();
@@ -58,7 +58,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         mysqli_close($conn);
     }
     
-
  echo '
     <!DOCTYPE html>
     <html lang="vi">
@@ -179,7 +178,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 
 
-
 <?php
 
     $page_title = 'Trang chủ';
@@ -211,7 +209,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         exit;
     }
 ?>
-
 
 
 

@@ -28,6 +28,7 @@ WHERE laptop.Ma_hang = hang_laptop.Ma_hang and laptop.Ma_loai = loai_may.Ma_loai
 $counter = 0;
 
 session_start();
+
 if (isset($_SESSION['success_message'])) {
   echo '<p class="success-message">' . $_SESSION['success_message'] . '</p>';
   // Xóa thông báo sau khi hiển thị để tránh hiển thị lại khi refresh trang

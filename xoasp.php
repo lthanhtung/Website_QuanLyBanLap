@@ -16,14 +16,6 @@ $conn = mysqli_connect ('localhost', 'root', '', 'qlbanlap')
 if (isset($_GET['delete'])) {
     $ma_laptop = $_GET['delete'];
 
-    // Xóa các bản ghi liên quan trong ct_hoa_don trước
-    $sql_delete_ct_hoa_don = "DELETE FROM ct_hoa_don WHERE Ma_laptop = '$ma_laptop'";
-    $result_ct_hoa_don = mysqli_query($conn, $sql_delete_ct_hoa_don);
-
-    if ($result_ct_hoa_don && mysqli_affected_rows($conn) > 0) {
-        echo '<p class="success-message" >Xóa sản phẩm trong chi tiết hóa đơn thành công.</p>';
-    }
-
     // Xóa sản phẩm trong bảng laptop
     $sql_delete_laptop = "DELETE FROM laptop WHERE Ma_laptop = '$ma_laptop'";
     $result_laptop = mysqli_query($conn, $sql_delete_laptop);

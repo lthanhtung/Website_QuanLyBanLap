@@ -19,7 +19,7 @@ $rows = mysqli_fetch_array($result);
 <body>
     <p class='header-title'>XEM CHI TIẾT SẢN PHẨM</p>
 
-    <form action="Suasp.php" method="POST">
+    <form action="" method="POST">
         <table>
             <tr>
                 <td colspan="2" class="success-message"><?php echo $rows['Ten_laptop']  ?> </td>
@@ -34,31 +34,23 @@ $rows = mysqli_fetch_array($result);
                     <?php
                     echo '<b>Cấu hình:</b><br>' . $rows['Cau_hinh'];
                     echo '<br> <b>Hãng sản xuất: </b>';
-                    switch ($rows['Ma_hang']) {
-                        case 'MH01':
-                            echo 'Acer';
-                            break;
-                        case 'MH02':
-                            echo 'Macbook';
-                            break;
-                        case 'MH03':
-                            echo 'Asus';
-                            break;
-                        case 'MH04':
-                            echo 'MSI';
-                            break;
+
+                    $sql_hang = "SELECT * FROM hang_laptop WHERE Ma_hang = '$rows[Ma_hang]'";
+
+                    $result_hang = mysqli_query($dbc, $sql_hang);
+                    if (mysqli_num_rows($result_hang) <> 0) {
+                        while ($row_hang = mysqli_fetch_array($result_hang)) {
+                        echo"$row_hang[Ten_hang]";
+                        }
                     }
+
                     echo '<br><b>Loại máy: </b>';
-                    switch ($rows['Ma_loai']) {
-                        case 'ML01':
-                            echo 'Văn phòng';
-                            break;
-                        case 'ML02':
-                            echo 'Gamming';
-                            break;
-                        case 'ML03':
-                            echo 'Doanh nhân';
-                            break;
+                    $sql_loaimay = "SELECT * FROM loai_may WHERE Ma_loai ='$rows[Ma_loai]'";
+                    $result_loaimay = mysqli_query($dbc, $sql_loaimay);
+                    if (mysqli_num_rows($result_loaimay) <> 0) {
+                        while ($row_loaimay = mysqli_fetch_array($result_loaimay)) {
+                            echo "$row_loaimay[Ten_loai]";
+                        }
                     }
 
                     echo '<div style="text-align: right;"><b>Trọng lượng: </b>' . $rows['Trong_luong'] . 'kg - <b>Giá: </b>' . $rows['Gia'] . ' đ' . '</div>';

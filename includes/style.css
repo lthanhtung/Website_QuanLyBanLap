@@ -1,15 +1,10 @@
-/*
-	Author	:	Christopher Robinson
-	Email		:	christopher@edg3.co.uk
-	Website	:	http://www.edg3.co.uk/
-*/
+
 * {
 	border:1;
 	margin:0;
 	padding:0;
 }
 
-/* general */
 a {
 	color:#777;
 	text-decoration:none;
@@ -39,16 +34,6 @@ body {
 
 }
 
-
-/* navigation */
-#navigation {
-	background: #a3d2e8;
-	border-right:1px solid #999;
-	margin:0 auto;
-	width:750px;
-	height:40px;
-	list-style:none;
-}
 
 /* content */
 #content {
@@ -94,18 +79,18 @@ input, select, .input {
 }
 .list-group-horizontal {
     width: fit-content; /* Đặt chiều rộng phù hợp với nội dung */
-    margin: 0 auto; /* Canh giữa theo chiều ngang */
+    margin: 0 auto; 
 }
    .price {  
-        font-size: 16px;               /* Font size */  
-        font-weight: bold;              /* Make text bold */  
-        color: white;                   /* Text color */  
-        background-color: #ff4d4d;     /* Background color */  
-        border: 2px solid red;          /* Small red border */  
-        border-radius: 50px;            /* Rounded corners */  
-        display: inline-block;           /* Make it inline-block */  
-        text-align: center;             /* Center align text */  
-        margin: 0 auto;                    /* Optional margin */  
+        font-size: 16px;              
+        font-weight: bold;               
+        color: white;                   
+        background-color: #ff4d4d;     
+        border: 2px solid red;         
+        border-radius: 50px;            
+        display: inline-block;           
+        text-align: center;              
+        margin: 0 auto;                    
     }   
 .price span {  
     font-size: 1em;         
@@ -131,7 +116,7 @@ input, select, .input {
     .form-inline {
     display: flex;
     align-items: center;
-    gap: 15px; /* Khoảng cách giữa các mục */
+    gap: 15px; 
 }
 
 .form-inline i {
@@ -156,18 +141,18 @@ input, select, .input {
 
 
     .form-inline {  
-        display: flex;              /* Flex layout for the form */  
-        align-items: center;        /* Center items vertically */  
+        display: flex;               
+        align-items: center;       
     }  
 
     .form-inline i {  
-        margin-right: 15px;        /* Space between icons */  
-        font-size: 17px;           /* Icon size */  
-    }  
+        margin-right: 15px;        
+        font-size: 17px;               }  
 
 .bg-light {
     background-color: #849fba !important;
 }
+
 /* Thiết lập màu cho logo */
 .navbar .navbar-brand img {
     height: 40px;
@@ -209,168 +194,155 @@ input, select, .input {
 .navbar .form-inline a:hover {
     color: #ffb03b; /* Đổi màu khi hover */
 }
-   #navigation {  
-        background-color: #619bb6;              /* Dark background for the navigation */  
-        padding: 15px;                       /* Padding around the navigation */  
-        border-radius: 7px;                 /* Rounded corners for the navigation */  
-        overflow: hidden;                     /* Ensures items fit within rounded corners */  
-    }  
 
-    #navigation ul {  
-        list-style: none;                    /* Remove bullet points from the list */  
-        display: flex;                       /* Use flexbox for horizontal layout */  
-        justify-content: space-around;       /* Space items evenly */  
-        padding: 0;                          /* Remove default padding */  
-        margin: 0;                           /* Remove default margin */  
-    }  
+/*-----------------------------------------------CSS cho dropdown menu----------------- */
+.btn-group .btn-secondary {
+    font-family: monospace;
+    background-color: #a9c7ea; /* Màu nền của nút chính */
+    color: #fff; /* Màu chữ */
+    font-size: 19px; /* Kích thước chữ */
+    padding: 10px 20px; /* Khoảng cách padding */
+    border-radius: 10px; /* Độ bo góc */
+    border: none; /* Xóa đường viền */
+    transition: background-color 0.3s; /* Hiệu ứng khi hover */
+}
 
-    #navigation li {  
-        position: relative;                  /* Position for dropdown (if needed) */  
-    }  
+.btn-group .btn-secondary:hover {
+    background-color: #0056b3; /* Màu khi hover */
+}
 
-    #navigation a {  
-    	font-family:cursive;
-        color: white;                        /* White text color */  
-        text-decoration: none;               /* Remove underline */  
-        font-size: 17px;                     /* Font size */  
-        padding: 1px 1px;                  /* Padding for clickable area */  
-        transition: background-color 0.3s;   /* Smooth transition for hover effect */  
-        border-radius: 10px;                  /* Rounded corners for individual links */  
-    }  
 
-    #navigation a:hover {  
-        background-color: wheat;              /* Darker background on hover */  
-        border-radius: 100px;                  /* Keep corners rounded on hover */  
-    } 
+.dropdown-menu {
+    background-color: rgba(0, 123, 255, 0.1)  !important; /* Màu nền của menu */
+    min-width: 260px !important; /* Chiều rộng tối thiểu */
+    border: 1px solid #ddd !important; /* Đường viền */
+    border-radius: 5px !important; /* Độ bo góc */
+    padding: 10px 0 !important; /* Khoảng cách padding */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1) !important; /* Hiệu ứng đổ bóng */
+}
 
-    body {  
-        font-family: Arial, sans-serif; /* Use a clean, modern font */  
-        background-color: #f4f4f4; /* Light background for contrast */  
-        margin: 0;  
-        padding: 20px;  
-    }  
+/* CSS cho các mục trong dropdown */
+.dropdown-item {
+    font-family: sans-serif;
+    font-size: 18px; /* Kích thước chữ */
+    padding: 30px 20px; /* Khoảng cách padding */
+    transition: background-color 0.3s; /* Hiệu ứng khi hover */
+}
+
+.dropdown-item:hover {
+    background-color: #d4b65b !important ; /* Màu nền khi hover */
+}
+
+/*-----------------------------------------------------------------------------*/
+
     
     h1 {  
         text-align: center;  
         color: #333; /* Dark header color */  
     }  
     
-    
-    table {  
-        width: 100%; /* Full width for the table */  
-        margin-top: 10px; /* Space above table */  
-    }  
-    
+
     td {  
-        padding: 10px; /* Padding inside table cells */  
-        vertical-align: top; /* Align text to the top */  
+        padding: 10px; 
+        vertical-align: top; 
     }  
     
     input[type="text"],  
     input[type="file"],  
     select {  
-        width: 100%; /* Full width for input fields */  
-        padding: 8px; /* Padding inside input fields */  
-        border: 1px solid #ccc; /* Light gray border */  
-        border-radius: 4px; /* Rounded corners for input fields */  
-        box-sizing: border-box; /* Include padding in width */  
-        transition: border-color 0.3s; /* Smooth transition for border color */  
+        width: 100%; 
+        border: 1px solid #ccc; 
+        border-radius: 4px; / 
+        box-sizing: border-box; 
+        transition: border-color 0.3s;
     }  
     
     input[type="text"]:focus,  
     select:focus {  
-        border-color: #4862c4; /* Change border color on focus */  
-        outline: none; /* Remove default outline */  
+        border-color: #4862c4;  
+        outline: none; 
     }  
     
     input[type="radio"] {  
-        margin-right: 5px; /* Space between radio buttons and labels */  
+        margin-right: 5px; 
     }  
     
     input[type="submit"] {  
-        background-color: #3e9382; /* Button background color */  
-        color: white; /* Button text color */  
-        border: none; /* No border */  
-        padding: 10px 15px; /* Padding for the button */  
-        border-radius: 40px; /* Rounded corners for button */  
-        cursor: pointer; /* Pointer cursor on hover */  
-        transition: background-color 0.3s; /* Smooth transition for background color */  
+        background-color: #3e9382;  
+        color: white; 
+        border: none; 
+        padding: 10px 15px; 
+        border-radius: 40px; 
+        cursor: pointer; 
+        transition: background-color 0.3s;  
    		margin-top: 10px;
     }  
     
     input[type="submit"]:hover {  
-        background-color: #375a94; /* Darker blue on hover */  
+        background-color: #375a94;   
     }  
     
     .error {  
-        color: red; /* Error message color */  
-        font-weight: bold; /* Bold error messages */  
+        color: red;   
+        font-weight: bold;  
     }  
     
-    a {  
-        text-decoration: none; /* Remove underline from links */  
-        color: #4862c4; /* Link color */  
-    }  
-    
-    a:hover {  
-        text-decoration: underline; /* Underline on hover */  
-    }  
-
+   
     .button-link {  
-        display: inline-block; /* Make the link behave like a button */  
-        padding: 10px 20px; /* Add padding for a button-like appearance */  
-        background-color: #4862c4; /* Background color */  
-        color: yellow; /* Text color */  
-        border-radius: 50px; /* Rounded corners */  
-        text-align: center; /* Center the text */  
-        text-decoration: none; /* Remove underline */  
-        transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */  
-        margin-top: 20px; /* Margin above the button */  
+        display: inline-block;   
+        padding: 10px 20px;   
+        background-color: #4862c4; 
+        color: yellow;  
+        border-radius: 50px;   
+        text-align: center;   
+        text-decoration: none;   
+        transition: background-color 0.3s, transform 0.3s; 
+        margin-top: 20px;  
         margin-right: 10px;
     }  
 
     .button-link:hover {  
-        background-color: wheat; /* Darker shade on hover */  
-        transform: translateY(-2px); /* Slight lift effect on hover */  
+        background-color: wheat; 
+        transform: translateY(-2px);  
     }  
 
     .button-link:active {  
-        transform: translateY(1px); /* Pressed effect */  
+        transform: translateY(1px);  
     }  
 
 
 
 table {  
-        width: 100%; /* Full width for the table */  
-        border-collapse: collapse; /* Remove space between cells */  
+        width: 100%; 
+        border-collapse: collapse;  
     }  
     
     td {  
     	margin: 10px;
-        padding: 10px; /* Padding around each cell */  
-        border: 1px solid #ddd; /* Light gray border */  
-        background-color: #fafafa; /* Light background for cells */  
-        text-align: center; /* Center-align text and images */  
-        transition: transform 0.2s; /* Smooth transition for hover effects */  
+        padding: 10px; 
+        border: 1px solid #ddd;  
+        background-color: #fafafa; 
+        text-align: center;  
+        transition: transform 0.2s; 
     }  
 
     td:hover {  
-        transform: scale(1.05); /* Slightly enlarge the cell on hover */  
-        background-color: #f0f0f0; /* Change background color on hover */  
+        transform: scale(1.05);  
+        background-color: #f0f0f0; 
     }  
  
 
     b {  
-        color: #333; /* Dark color for text */  
+        color: #333; 
     }  
 
    .success-message {
     color: #6d70a6; 
-    font-size: 18px; /* Kích thước chữ lớn */
-    font-weight: bold; /* Chữ đậm */
-    text-align: center; /* Căn giữa chữ */
-    width: fit-content; /* Chỉ vừa đủ kích thước của nội dung */
-    margin: 20px auto; /* Căn giữa thông báo và tạo khoảng cách phía trên */
+    font-size: 18px; 
+    font-weight: bold; 
+    text-align: center; 
+    width: fit-content; 
+    margin: 20px auto; 
 }
 .delete-button {
         display: inline-block;
@@ -519,4 +491,3 @@ table {
     float: right;
 }
 
-/*----------------------------------------login-------------------*/
